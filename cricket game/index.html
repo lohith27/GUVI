@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mega Cricket</title>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg">
+    <div class="wrapper">
+        <span class="b">
+            <div class="heading">
+                <h1>Team A</h1>
+            </div>
+            <div style="padding-left: 80px;">
+                <h3>Runs:<input type="text" value="0" id="bat-A" style="width: 75%;"></h3>
+            </div>
+            <div style="padding-left: 80px;padding-top: 50px;">
+                <h3 style="color: red;">Player Score:<input type="text" value="0" id="player-A" style="width: 50%;"></h3>
+            </div>
+            <div style="padding-left: 80px;padding-top: 50px;">
+                <h3 style="color: red;">Team Score:<input type="text" value="0" id="team-A" style="width: 50%;"></h3>
+            </div>
+            <div style="padding-top: 50px;">
+                <h3>Wickets:<input type="text" value="0" id="wickets-A" style="width: 20%;"></h3>
+            </div>
+            <div>
+                <h3>Balls Left:<input type="text" value="0" id="balls-A" style="width: 20%;"></h3>
+            </div>
+            <div class="btn-position">
+                <button class="button1" onclick="clickTeamA('bat-A','player-A','team-A','wickets-A','balls-A')">Hit</button>
+            </div>
+        </span>
+        <span class="b">
+            <div class="heading">
+                <h1>Team B</h1>
+            </div>
+            <div style="padding-left: 80px;">
+                <h3>Runs:<input type="text" value="0" id="bat-B" style="width: 75%;"></h3>
+            </div>
+            <div style="padding-left: 80px;padding-top: 50px;">
+                <h3 style="color: red;">Player Score:<input type="text" value="0" id="player-B" style="width: 50%;"></h3>
+            </div>
+            <div style="padding-left: 80px;padding-top: 50px;">
+                <h3 style="color: red;">Team Score:<input type="text" value="0" id="team-B" style="width: 50%;"></h3>
+            </div>
+            <div style="padding-top: 50px;">
+                <h3>Wickets:<input type="text" value="0" id="wickets-B" style="width: 20%;"></h3>
+            </div>
+            <div>
+                <h3>Balls Left:<input type="text" value="0" id="balls-B" style="width: 20%;"></h3>
+            </div>
+            <div class="btn-position">
+                <button class="button1" onclick="clickTeamB('bat-B', 'player-B', 'team-B','wickets-B', 'balls-B')">Hit</button>
+            </div>
+            
+        </span>  
+        
+    </div>
+    <script src="script1.js"></script>
+</body>
+</html>
