@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD without DB</title>
+</head>
+
+<body>
+    <h2>Create Data</h2>
+    <form onsubmit="sendData(); return false">
+        <table>
+            <tr>
+                <th>Name</th>
+                <td><input type="text" id="name"></td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td><input type="email" id="email"></td>
+            </tr>
+            <tr>
+
+                <td><input type="submit" value="login"></td>
+            </tr>
+        </table>
+    </form>
+    <h2>Read Data</h2>
+    <input type="button" value="Get details" onclick="receiveData()">
+
+    <!-- <h2>Read Data from ID</h2>
+    <h3>ID : <input type="number" id="readid"></h3>
+    <input type="button" value= "Read" onclick="readID()"> -->
+    <h2>Edit Data</h2>
+    <h3>ID :<input type="number" id="userId"></h3>
+    <h3>NAME :<input type="text" id="updatedname"></h3>
+    <h3>Email : <input type="email" id="updatedemail"></h3>
+    <input type="button" value="Update details" onclick="editData()">
+
+    <h2>Delete data</h2>
+    <h3>ID : <input type="number" id="deleteid"></h3>
+    <input type="button" value="Delete" onclick="deleteData()">
+
+
+    <script>
+        function sendData() {
+            const data = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value
+            };
+            fetch("http://localhost:8000/users", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(function (data) {
+                return data.json();
+            }).then(function (userData) {
+                console.log(userData);
+            });
+        }
+        function receiveData() {
+            const value = [];
+            const myData = fetch("http://localhost:8000/data", {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+                //body: JSON.stringify(value)
+            });
+            myData.then(function (data) {
+                return data.json;
+            }).then(function (myValue) {
+                value.push(myValue.toString());
+                console.log(value);
+            }).catch(function (err) {
+                console.log(err);
+            });
+
+            window.open('http://localhost:8000/data');
+
+        }
+
+        function editData(){
+            const userData = {
+                userId : document.getElementById('userId').value,
+                name : document.getElementById('updatedname').value,
+                email: document.getElementById('updatedemail').value
+            }
+            fetch("http://localhost:8000/modifyData/"+ parseInt(userData[userId]), {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            }).then(function (data) {
+                return data.json();
+            }).then(function (userData) {
+                console.log(userData);
+            });
+            
+        }
+
+        function deleteData(){
+            const user = {
+                userId: document.getElementById('deleteid').value
+            }
+
+        fetch("http://localhost:8000/delete/"+ parseInt(user[userId]), {
+            method:'DELETE',
+            headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+            body: JSON.stringify(user)
+        }).then(function (data) {
+            return data.json();
+        }).then(function (userData) {
+            console.log(userData);
+        })
+    }
+
+    /* function readID(){
+        const user = {
+            readid : document.getElementById('readid').value
+        }
+
+        //fetch("http://localhost:8000/data/" +parseInt(user[readid]), {
+            //method:'GET',
+            //headers: {
+                    //'Accept': 'application/json, text/plain, *//*',
+                   // 'Content-Type': 'application/json'
+                //},
+            //body: JSON.stringify(user)
+                
+        // }) .then(function(data){
+           /*  return data.json();
+        }).then(function(userData) {
+            console.log(userData);
+        })   */
+
+       // window.open('http://localhost:8000/data/' +parseInt(user[readid]));
+    //} */
+
+    </script>
+</body>
+
+</html>
