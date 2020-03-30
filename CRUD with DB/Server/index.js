@@ -78,10 +78,10 @@ app.post('/users', (req, res) => {
 
 app.put('/modifyData/:id', (req, res) => {
     let userId = req.params.id;
-    console.log(req.params);
+    console.log(req.params.id);
 
     mongoClient.connect(url, (err, client) => {
-        if(err) throw err;
+        if (err) throw err;
 
         var db = client.db('demoDb');
 
@@ -90,26 +90,27 @@ app.put('/modifyData/:id', (req, res) => {
             email: req.body.email
         }
 
-        /* bcrypt.genSalt(saltRound, (err, salt) => {
-            if(err) throw err;
+        bcrypt.genSalt(saltRound, (err, salt) => {
+            if (err) throw err;
             console.log(salt);
 
             bcrypt.hash(req.body.password, salt, (err, hash) => {
-                if(err) throw err;
+                if (err) throw err;
                 console.log(hash);
                 newData.password = hash;
+
+
+                var ObjectId = require('mongodb').ObjectID;
+                db.collection('users').updateOne({ _id: new ObjectId(userId) }, { $set: { name: req.body.name, email: req.body.email, password: newData.password } }, { upsert: true }, (err, data) => {
+                    if (err) throw err;
+                    console.log(data);
+                    client.close();
+                    res.json({
+                        message: "Updated"
+                    })
+                })
             })
         })
- */
-        var ObjectId = require('mongodb').ObjectID;
-        db.collection('users').updateOne({_id: new ObjectId(userId)},{ $set: {name: req.body.name, email: req.body.email, password: req.password}},{ upsert: true },(err, data) => {
-            if(err) throw err;
-            console.log(data);
-            client.close();
-            res.json({
-                message: "Updated"
-            })
-        } )
     })
 
 })
@@ -121,13 +122,13 @@ app.delete('/delete/:id', (req, res) => {
     console.log(index);
 
     mongoClient.connect(url, (err, client) => {
-        if(err) throw err;
+        if (err) throw err;
 
         var db = client.db('demoDb');
         var ObjectId = require('mongodb').ObjectID;
 
-        db.collection('users').deleteOne({_id: ObjectId(req.params.id)}, (err, data) => {
-            if(err) throw err;
+        db.collection('users').deleteOne({ _id: ObjectId(req.params.id) }, (err, data) => {
+            if (err) throw err;
             client.close();
             res.json({
                 message: "Deleted"
