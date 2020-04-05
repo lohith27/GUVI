@@ -1,0 +1,29 @@
+table{
+    width: 50%;
+    border: solid black 5px;
+    margin-top: 200px;    
+}
+
+th,td{ 
+    text-align: center;  
+    padding: 5px;
+    }
+
+
+header{
+    background-color: #3b5998 ;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 0;
+    color: white;
+}
+
+footer{
+    background-color: #3b5998 ;
+    width: 100%;
+    text-align: center;
+    position:absolute;
+    bottom:0;
+    color: white;
+}
