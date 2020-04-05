@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <form onsubmit="sendData(); return false">
+        <table>
+            <tr>
+                <th>Email</th>
+                <td><input type="email" id="email"></td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td><input type="password" id="pass"></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Log in"></td>
+            </tr>
+        </table>
+    </form>
+    <script>
+        function sendData(){
+            const userData = {
+                email: document.getElementById('email').value,
+                password: document.getElementById('pass').value
+            };
+
+            fetch("http://localhost:3030/login", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            }).then((data) => {
+                return data.json();
+            }).then((result) => {
+                console.log(result);
+                localStorage.setItem("token", result.token);
+            })
+            window.open("menu.html");
+        }
+    </script>
+</body>
+</html>

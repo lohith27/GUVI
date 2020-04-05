@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+</head>
+<body>
+    <form onsubmit="sendData(); return false">
+        <table>
+            <tr>
+                <th>Name</th>
+                <td><input type="text" id="name"></td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td><input type="email" id="email"></td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td><input type="password" id="pass"></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Add User"></td>
+            </tr>
+        </table>
+    </form>
+    <input type="button" value="Get Data" onclick="getData()">
+
+    <script>
+        function sendData(){
+            const user = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                password : document.getElementById('pass').value
+            }
+
+            fetch("http://localhost:3030/users" , {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
+                
+            }).then((data) =>{
+                console.log(data);
+                return data.json()
+            }).then((result) => {
+                console.log(result);
+            })
+        }
+
+        function getData(){
+            fetch("http://localhost:3030/", {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json',
+                }
+            }).then((data) => {
+                return data.json();
+            }).then((result) => {
+                console.log(result);
+                for(var i =0; i< result.length; i++) {
+                    document.write(result[i].name + "<br>");
+                }
+            })
+        }
+        
+    </script>
+</body>
+</html>
