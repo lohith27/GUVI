@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD WITH DB</title>
+</head>
+
+<body>
+    <h2>Create Data</h2>
+    <form onsubmit="sendData(); return false">
+        <table>
+            <tr>
+                <th>Name</th>
+                <td><input type="text" id="name"></td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td><input type="email" id="email"></td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td><input type="password" id="pass"></td>
+            </tr>
+            <tr>
+
+                <td><input type="submit" value="login"></td>
+            </tr>
+        </table>
+    </form>
+
+    <h2>Get Data</h2>
+    <input type="button" onclick="getData()" value="Get Data">
+
+    <h2>Edit Data</h2>
+    <h3>ID <input type="text" id="editId"></h3>
+    <h3>Name <input type="text" id="editName"></h3>
+    <h3>Email <input type="email" id="editEmail"></h3>
+    <h3>Password <input type="password" id="editPass"></h3>
+    <input type="button" onclick="editData()" value="Edit">
+
+    <h2>Delete Data</h2>
+    <h3>ID <input type="text" id="deleteId"></h3>
+    <input type="button" onclick="deleteData()" value="Delete">
+
+    <script>
+        function sendData() {
+            const userData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                password: document.getElementById('pass').value
+            };
+            fetch("http://localhost:3030/users", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            }).then((data) => {
+                return data.json();
+            }).then((userValue) => {
+                console.log(userValue);
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
+
+        function getData() {
+            //alert('hello');
+            const myHeaders = new Headers();
+            fetch("http://localhost:3030/", {
+                method: 'GET',
+                headers: myHeaders,
+                mode: 'cors',
+                cache: 'default'
+            }).then((data) => {
+                //alert('1');
+                let userData = data;
+                console.log(userData);
+                return userData.json();
+                /* 
+                    alert('2');
+                } */
+            }).then((userValue) => {
+                //alert('2');
+                for (var i = 0; i < userValue.length; i++) {
+                    document.write('Name ' + i+1 + ': ' + userValue[i].name + "<br>");
+                    console.log(userValue[i]);
+                }
+                console.log(userValue);
+            })
+        }
+
+        function editData(){
+            const userData = {
+                userId : document.getElementById('editId').value,
+                name: document.getElementById('editName').value,
+                email: document.getElementById('editEmail').value,
+                password: document.getElementById('editPass').value
+            };
+            const url = 'http://localhost:3030/modifyData/'+ userData.userId;
+            console.log(userData.userId);
+
+            fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            }).then((data) => {
+                return data.json();
+            }).then((userValue) => {
+                console.log(userValue);
+            })
+        }
+
+        function deleteData(){
+            const user = {
+                userId : document.getElementById('deleteId').value
+            };
+
+            fetch("http://localhost:3030/delete/" + user.userId, {
+                method: 'DELETE',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            }).then((data) => {
+                return data.json();
+            }).then((myValue) => {
+                console.log(myValue);
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
+    </script>
+</body>
+
+</html>
